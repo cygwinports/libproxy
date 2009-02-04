@@ -1,0 +1,72 @@
+--- origsrc/libproxy-0.2.3/src/lib/Makefile.am	2008-06-05 15:56:15.000000000 -0500
++++ src/libproxy-0.2.3/src/lib/Makefile.am	2009-02-03 19:53:55.706875000 -0600
+@@ -2,7 +2,8 @@ lib_LTLIBRARIES     = libproxy.la
+ libproxy_la_SOURCES = misc.c url.c pac.c dhcp.c dns.c slp.c wpad.c proxy_factory.c config_file.c \
+ 						misc.h url.h pac.h dhcp.h dns.h slp.h wpad.h proxy_factory.h proxy.h config_file.h
+ libproxy_la_CFLAGS  = -Wall
+-libproxy_la_LDFLAGS = -lm
++libproxy_la_LDFLAGS = -no-undefined
++libproxy_la_LIBADD  = -lm
+ 
+ include_HEADERS     = proxy.h
+ 
+--- origsrc/libproxy-0.2.3/src/plugins/Makefile.am	2008-06-05 15:56:14.000000000 -0500
++++ src/libproxy-0.2.3/src/plugins/Makefile.am	2009-02-03 17:45:35.253750000 -0600
+@@ -28,45 +28,45 @@ endif
+ envvar_la_SOURCES         = envvar.c
+ envvar_la_CFLAGS          = -I$(top_srcdir)/src/lib
+ envvar_la_LIBADD          = ../lib/libproxy.la
+-envvar_la_LDFLAGS         = -module -avoid-version
++envvar_la_LDFLAGS         = -module -avoid-version -no-undefined
+ 
+ # File Config Plugin
+ file_la_SOURCES           = file.c
+ file_la_CFLAGS            = -I$(top_srcdir)/src/lib
+ file_la_LIBADD            = ../lib/libproxy.la
+-file_la_LDFLAGS           = -module -avoid-version
++file_la_LDFLAGS           = -module -avoid-version -no-undefined
+ 
+ # GConf/GNOME Config Plugin
+ gnome_la_SOURCES          = gnome.c xhasclient.c
+ gnome_la_CFLAGS           = -I$(top_srcdir)/src/lib @GNOME_CFLAGS@
+-gnome_la_LIBADD           = ../lib/libproxy.la
+-gnome_la_LDFLAGS          = -module -avoid-version @GNOME_LIBS@
++gnome_la_LIBADD           = ../lib/libproxy.la @GNOME_LIBS@
++gnome_la_LDFLAGS          = -module -avoid-version -no-undefined
+ 
+ # KDE Config Plugin
+ kde_la_SOURCES            = kde.c xhasclient.c
+ kde_la_CFLAGS             = -I$(top_srcdir)/src/lib @KDE_CFLAGS@
+-kde_la_LIBADD             = ../lib/libproxy.la
+-kde_la_LDFLAGS            = -module -avoid-version @KDE_LIBS@
++kde_la_LIBADD             = ../lib/libproxy.la @KDE_LIBS@
++kde_la_LDFLAGS            = -module -avoid-version -no-undefined
+ 
+ # WebKit (JavaScriptCore) based PAC runner
+ webkit_la_SOURCES          = webkit.c
+ webkit_la_CFLAGS           = -I$(top_srcdir)/src/lib @WEBKIT_CFLAGS@
+-webkit_la_LIBADD           = ../lib/libproxy.la
+-webkit_la_LDFLAGS          = -module -avoid-version @WEBKIT_LIBS@
++webkit_la_LIBADD           = ../lib/libproxy.la @WEBKIT_LIBS@
++webkit_la_LDFLAGS          = -module -avoid-version -no-undefined
+ nodist_webkit_la_SOURCES   = pacutils.h
+ 
+ # Mozilla (Spidermonkey) based PAC runner
+ mozjs_la_SOURCES          = mozjs.c
+ mozjs_la_CFLAGS           = -I$(top_srcdir)/src/lib @MOZJS_CFLAGS@
+-mozjs_la_LIBADD           = ../lib/libproxy.la
+-mozjs_la_LDFLAGS          = -module -avoid-version @MOZJS_LIBS@
++mozjs_la_LIBADD           = ../lib/libproxy.la @MOZJS_LIBS@
++mozjs_la_LDFLAGS          = -module -avoid-version -no-undefined
+ nodist_mozjs_la_SOURCES   = pacutils.h
+ 
+ # NetworkManager Plugin
+ networkmanager_la_SOURCES = networkmanager.c
+ networkmanager_la_CFLAGS  = -I$(top_srcdir)/src/lib @NETWORKMANAGER_CFLAGS@
+-networkmanager_la_LIBADD  = ../lib/libproxy.la
+-networkmanager_la_LDFLAGS = -module -avoid-version @NETWORKMANAGER_LIBS@
++networkmanager_la_LIBADD  = ../lib/libproxy.la @NETWORKMANAGER_LIBS@
++networkmanager_la_LDFLAGS = -module -avoid-version -no-undefined
+ 
+ BUILT_SOURCES = pacutils.h
+ CLEANFILES = pacutils.h
