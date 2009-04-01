@@ -1,0 +1,12 @@
+--- origsrc/libproxy-0.2.3/src/lib/proxy_factory.c	2008-06-05 15:56:15.000000000 -0500
++++ src/libproxy-0.2.3/src/lib/proxy_factory.c	2009-03-26 14:04:23.656801700 -0500
+@@ -29,6 +29,9 @@
+ #include <arpa/inet.h>
+ #include <pthread.h>
+ 
++#ifndef RTLD_LOCAL
++#define RTLD_LOCAL 0
++#endif
+ 
+ #include "misc.h"
+ #include "proxy_factory.h"

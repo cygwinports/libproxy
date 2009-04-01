@@ -1,0 +1,9 @@
+category: Net Python
+requires: cygwin libproxy-devel python
+external-source: libproxy
+sdesc: "Proxy configuration management library (Python bindings)"
+ldesc: "libproxy exists to answer the question: Given a network 
+resource, how do I reach it? It handles all the details, enabling you to 
+get back to programming. Just ask libproxy what proxy to use: you get 
+simple code and your users get correct, consistant behavior and broad 
+infrastructure compatibility."

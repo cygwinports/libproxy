@@ -3,38 +3,37 @@ inherit python
 DESCRIPTION="Automatic proxy configuration management library"
 HOMEPAGE="http://code.google.com/p/libproxy/"
 SRC_URI="http://libproxy.googlecode.com/files/${P}.tar.gz"
-PATCH_URI="
-	0.2.3-no-undefined.patch
-	0.2.3-python.patch
-	0.2.3-getaddrinfo.patch
-"
+PATCH_URI="0.2.3-no-undefined.patch
+           0.2.3-dlfcn.patch
+           0.2.3-python.patch"
 
 PKG_NAMES="${PN} ${PN}0 ${PN}-devel python-${PN}"
 libproxy_CONTENTS="usr/bin/*.exe usr/share/"
 libproxy_devel_CONTENTS="usr/include/ usr/lib/libproxy.* usr/lib/pkgconfig/"
 python_libproxy_CONTENTS="${PYTHON_SITELIB#/}"
 
-for plugin in gnome kde mozjs webkit
-do
-	PKG_NAMES+=" libproxy0-${plugin}"
-	declare libproxy0_${plugin}_CONTENTS="usr/lib/libproxy/${PV}/plugins/${plugin}.dll"
-	libproxy0_CONTENTS+=" --exclude=${plugin}.dll"
-done
-unset plugin
+#for plugin in gnome kde mozjs webkit
+#do
+#	PKG_NAMES+=" libproxy0-${plugin}"
+#	declare libproxy0_${plugin}_CONTENTS="usr/lib/libproxy/${PV}/plugins/${plugin}.dll"
+#	libproxy0_CONTENTS+=" --exclude=${plugin}.dll"
+#done
+#unset plugin
 
 libproxy0_CONTENTS+=" usr/bin/cygproxy-0.dll usr/lib/libproxy/"
 
 # use spidermonkey for mozilla-js
-export mozjs_CFLAGS="-I/usr/include/js -DXP_UNIX"
-export mozjs_LIBS="-ljs"
+#export mozjs_CFLAGS="-I/usr/include/js -DXP_UNIX"
+#export mozjs_LIBS="-ljs"
+
 CYGCONF_ARGS="
 	--disable-static
 	--with-envvar
 	--with-file
 	--with-gnome
 	--with-kde
+	--without-mozjs
 	--with-webkit
-	--with-mozjs
 	--without-networkmanager
 	--with-python
 "
