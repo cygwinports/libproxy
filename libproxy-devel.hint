@@ -1,5 +1,5 @@
 category: Net
-requires: cygwin libproxy0
+requires: libproxy0
 external-source: libproxy
 sdesc: "Proxy configuration management library (development)"
 ldesc: "libproxy exists to answer the question: Given a network 

@@ -1,5 +1,5 @@
 category: Net
-requires: cygwin libgcc1 libproxy0
+requires: libgcc1 libproxy0
 sdesc: "Proxy configuration management library (sample app)"
 ldesc: "libproxy exists to answer the question: Given a network 
 resource, how do I reach it? It handles all the details, enabling you to 

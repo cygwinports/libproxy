@@ -1,5 +1,5 @@
 category: Net Python
-requires: cygwin libproxy-devel python
+requires: libproxy-devel python
 external-source: libproxy
 sdesc: "Proxy configuration management library (Python bindings)"
 ldesc: "libproxy exists to answer the question: Given a network 
