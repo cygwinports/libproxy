@@ -7,7 +7,7 @@ PATCH_URI="0.2.3-no-undefined.patch
            0.2.3-dlfcn.patch
            0.2.3-python.patch"
 
-PKG_NAMES="${PN} ${PN}0 ${PN}-devel python-${PN}"
+PKG_NAMES="${PN} ${PN}0 ${PN}-devel" # python-${PN}"
 libproxy_CONTENTS="usr/bin/*.exe usr/share/"
 libproxy_devel_CONTENTS="usr/include/ usr/lib/libproxy.* usr/lib/pkgconfig/"
 python_libproxy_CONTENTS="${PYTHON_SITELIB#/}"
@@ -26,6 +26,8 @@ libproxy0_CONTENTS+=" usr/bin/cygproxy-0.dll usr/lib/libproxy/"
 #export mozjs_CFLAGS="-I/usr/include/js -DXP_UNIX"
 #export mozjs_LIBS="-ljs"
 
+# webkit: circular dependency (libproxy -> libsoup -> webkit)
+# python: requires Ports' ctypes patch
 CYGCONF_ARGS="
 	--disable-static
 	--with-envvar
@@ -33,7 +35,7 @@ CYGCONF_ARGS="
 	--with-gnome
 	--with-kde
 	--without-mozjs
-	--with-webkit
+	--without-webkit
 	--without-networkmanager
-	--with-python
+	--without-python
 "
