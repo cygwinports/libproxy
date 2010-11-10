@@ -1,0 +1,41 @@
+inherit perl python cmake
+
+DESCRIPTION="Automatic proxy configuration management library"
+HOMEPAGE="http://code.google.com/p/libproxy/"
+SRC_URI="http://libproxy.googlecode.com/files/${P}.tar.gz"
+
+PATCH_URI="
+	0.4.6-cmake-install.patch
+	0.4.6-lib-install.patch
+	0.4.6-perl-module.patch
+"
+
+PKG_NAMES="${PN} ${PN}1 ${PN}-devel perl-Net-Libproxy python-${PN} vala-libproxy1.0" # mono-libproxy-sharp
+libproxy_CONTENTS="--exclude=vala* usr/bin/*.exe usr/share/"
+libproxy1_CONTENTS="usr/bin/cygmodman-1.dll usr/bin/cygproxy-1.dll usr/lib/libproxy/${PV}/"
+libproxy_devel_CONTENTS="usr/include/ usr/lib/cmake/ usr/lib/libproxy.* usr/lib/pkgconfig/"
+#mono_libproxy_sharp_CONTENTS="usr/lib/mono/"
+perl_Net_Libproxy_CONTENTS=${PERL_VENDORARCH#/}
+python_libproxy_CONTENTS="${PYTHON_SITELIB#/}"
+vala_libproxy1_0_CONTENTS="usr/share/vala*/"
+
+# KDE4 not yet in distro
+# WEBKIT is same story, but no option to ignore, must move .pc out of way
+CYGCMAKE_ARGS="
+	-DKDE4_KDECONFIG_EXECUTABLE=NOTFOUND
+	-DLIBEXEC_INSTALL_DIR=/usr/lib/${PN}/${PV}
+	-DPERL_VENDORINSTALL=ON
+	-DVAPI_DIR=$(pkg-config --variable=vapidir vala-0.10)
+	-DWITH_DOTNET=OFF
+	-DWITH_PERL=ON
+	-DWITH_PYTHON=ON
+	-DWITH_VALA=ON
+"
+
+src_install() {
+	cd ${B}
+	cyginstall
+
+	perl_postinst
+	python_optimize
+}

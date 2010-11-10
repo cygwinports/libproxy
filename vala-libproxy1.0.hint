@@ -1,6 +1,7 @@
 category: Net
-requires: libproxy1
-sdesc: "Proxy configuration management library (sample app)"
+requires: libproxy-devel
+external-source: libproxy
+sdesc: "Proxy configuration management library (Vala bindings)"
 ldesc: "libproxy exists to answer the question: Given a network 
 resource, how do I reach it? It handles all the details, enabling you to 
 get back to programming. Just ask libproxy what proxy to use: you get 

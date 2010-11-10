@@ -1,0 +1,11 @@
+--- origsrc/libproxy-0.4.6/bindings/perl/src/CMakeLists.txt	2010-09-01 15:23:34.000000000 -0500
++++ src/libproxy-0.4.6/bindings/perl/src/CMakeLists.txt	2010-11-10 12:07:04.591515600 -0600
+@@ -14,7 +14,7 @@ set(CMAKE_C_COMPILER ${CMAKE_CXX_COMPILE
+ set(CMAKE_C_FLAGS ${PERL_CXX_FLAGS} )
+ 
+ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/perl/blib/arch/auto/Net)
+-add_library(PLlibproxy SHARED ${Libproxy_LIB_SRCS})
++add_library(PLlibproxy MODULE ${Libproxy_LIB_SRCS})
+ 
+ target_link_libraries(PLlibproxy ${PERL_LIBRARY} libproxy)
+ set_target_properties(PLlibproxy PROPERTIES OUTPUT_NAME "Libproxy")
