@@ -1,5 +1,5 @@
 category: Net
-requires: libproxy-devel
+requires:
 external-source: libproxy
 sdesc: "Proxy configuration management library (Vala bindings)"
 ldesc: "libproxy exists to answer the question: Given a network 
