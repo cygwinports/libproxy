@@ -1,0 +1,74 @@
+inherit perl python python3 cmake
+
+NAME="libproxy"
+VERSION=0.4.10
+RELEASE=1
+CATEGORY="Net"
+SUMMARY="Proxy configuration management library"
+DESCRIPTION="libproxy exists to answer the question: Given a network resource,
+how do I reach it? It handles all the details, enabling you to get back to
+programming. Just ask libproxy what proxy to use: you get simple code and your
+users get correct, consistant behavior and broad infrastructure compatibility."
+HOMEPAGE="http://code.google.com/p/libproxy/"
+SRC_URI="http://libproxy.googlecode.com/files/${P}.tar.gz"
+
+PATCH_URI="
+	http://pkgs.fedoraproject.org/cgit/libproxy.git/plain/libproxy-0.4.10-mozjs.patch
+	0.4.6-cmake-install.patch
+	0.4.7-lib-install.patch
+	0.4.6-perl-module.patch
+"
+
+PKG_NAMES="libproxy libproxy1 libproxy1-gnome libproxy1-pacrunner libproxy-devel
+	perl-Net-Libproxy python-libproxy python3-libproxy vala-libproxy1.0" # mono-libproxy-sharp
+libproxy_SUMMARY="${SUMMARY% *} utilities"
+libproxy_CONTENTS="--exclude=vala* usr/bin/*.exe usr/share/"
+libproxy1_SUMMARY="${SUMMARY} (runtime)"
+libproxy1_CONTENTS="usr/bin/cygproxy-1.dll"
+libproxy1_gnome_SUMMARY="${SUMMARY} (GNOME desktop support)"
+libproxy1_gnome_CONTENTS="usr/lib/libproxy/${VERSION}/pxgsettings.exe
+	usr/lib/libproxy/${VERSION}/modules/config_gnome3.dll"
+libproxy1_pacrunner_SUMMARY="${SUMMARY} (PACrunner support)"
+libproxy1_pacrunner_CONTENTS="usr/lib/libproxy/${VERSION}/modules/pacrunner_mozjs.dll"
+libproxy_devel_SUMMARY="${SUMMARY} (development)"
+libproxy_devel_CONTENTS="usr/include/ usr/lib/cmake/ usr/lib/libproxy.* usr/lib/pkgconfig/"
+#mono_libproxy_sharp_CONTENTS="usr/lib/mono/"
+perl_Net_Libproxy_CATEGORY="Perl"
+perl_Net_Libproxy_SUMMARY="${SUMMARY} (Perl bindings)"
+perl_Net_Libproxy_CONTENTS=${PERL_VENDORARCH#/}
+python_libproxy_CATEGORY="Python"
+python_libproxy_SUMMARY="${SUMMARY} (Python bindings)"
+python_libproxy_REQUIRES="libproxy-devel"	# ctypes.util.find_library()
+python_libproxy_CONTENTS="${PYTHON_SITELIB#/}"
+python3_libproxy_CATEGORY="Python"
+python3_libproxy_SUMMARY="${SUMMARY} (Python3 bindings)"
+python3_libproxy_REQUIRES="libproxy-devel"	# ctypes.util.find_library()
+python3_libproxy_CONTENTS="${PYTHON3_SITELIB#/}"
+vala_libproxy1_0_SUMMARY="${SUMMARY} (Vala bindings)"
+vala_libproxy1_0_CONTENTS="usr/share/vala*/"
+
+# DOTNET, WEBKIT: deps not yet in distro
+# ditto for KDE4, and it has pretty heavy deps for this purpose
+CYGCMAKE_ARGS="
+	-DKDE4_KDECONFIG_EXECUTABLE=NOTFOUND
+	-DLIBEXEC_INSTALL_DIR=/usr/lib/${PN}/${PV}
+	-DPERL_VENDORINSTALL=ON
+	-DBIPR=OFF
+	-DWITH_DOTNET=OFF
+	-DWITH_GNOME3=ON
+	-DWITH_MOZJS=ON
+	-DWITH_PERL=ON
+	-DWITH_PYTHON=ON
+	-DWITH_VALA=ON
+	-DWITH_WEBKIT=OFF
+"
+
+src_install() {
+	cd ${B}
+	cyginstall
+	dopython3 ${S}/bindings/python/*.py
+
+	perl_postinst
+	python_optimize
+	python3_optimize
+}
