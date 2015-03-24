@@ -2,7 +2,7 @@ inherit perl python python3 cmake
 
 NAME="libproxy"
 VERSION=0.4.11
-RELEASE=2
+RELEASE=3
 CATEGORY="Net"
 SUMMARY="Proxy configuration management library"
 DESCRIPTION="libproxy exists to answer the question: Given a network resource,
@@ -14,12 +14,15 @@ SRC_URI="http://libproxy.googlecode.com/files/${P}.tar.gz"
 
 PATCH_URI="
 	http://pkgs.fedoraproject.org/cgit/libproxy.git/plain/libproxy-0.4.10-mozjs.patch
+	http://pkgs.fedoraproject.org/cgit/libproxy.git/plain/libproxy-0.4.11-fdleak.patch
+	http://pkgs.fedoraproject.org/cgit/libproxy.git/plain/libproxy-0.4.11-crash.patch
 	0.4.6-cmake-install.patch
 	0.4.7-lib-install.patch
 	0.4.6-perl-module.patch
 "
 
-PKG_NAMES="libproxy libproxy1 libproxy1-gnome libproxy1-pacrunner libproxy-devel
+PKG_NAMES="libproxy libproxy1 libproxy1-gnome libproxy-devel
+	libproxy1-mozjs libproxy1-webkit
 	perl-Net-Libproxy python-libproxy python3-libproxy vala-libproxy1.0" # mono-libproxy-sharp
 libproxy_SUMMARY="${SUMMARY% *} utilities"
 libproxy_CONTENTS="--exclude=vala* usr/bin/*.exe usr/share/"
@@ -28,8 +31,11 @@ libproxy1_CONTENTS="usr/bin/cygproxy-1.dll"
 libproxy1_gnome_SUMMARY="${SUMMARY} (GNOME desktop support)"
 libproxy1_gnome_CONTENTS="usr/lib/libproxy/${VERSION}/pxgsettings.exe
 	usr/lib/libproxy/${VERSION}/modules/config_gnome3.dll"
-libproxy1_pacrunner_SUMMARY="${SUMMARY} (PACrunner support)"
-libproxy1_pacrunner_CONTENTS="usr/lib/libproxy/${VERSION}/modules/pacrunner_mozjs.dll"
+libproxy1_mozjs_OBSOLETES="libproxy1-pacrunner"
+libproxy1_mozjs_SUMMARY="${SUMMARY} (SpiderMonkey-based PACrunner support)"
+libproxy1_mozjs_CONTENTS="usr/lib/libproxy/${VERSION}/modules/pacrunner_mozjs.dll"
+libproxy1_webkit_SUMMARY="${SUMMARY} (JavaScriptCore-based PACrunner support)"
+libproxy1_webkit_CONTENTS="usr/lib/libproxy/${VERSION}/modules/pacrunner_webkit.dll"
 libproxy_devel_SUMMARY="${SUMMARY} (development)"
 libproxy_devel_CONTENTS="usr/include/ usr/lib/cmake/ usr/lib/libproxy.* usr/lib/pkgconfig/"
 #mono_libproxy_sharp_CONTENTS="usr/lib/mono/"
@@ -60,7 +66,7 @@ CYGCMAKE_ARGS="
 	-DWITH_PERL=ON
 	-DWITH_PYTHON=ON
 	-DWITH_VALA=ON
-	-DWITH_WEBKIT=OFF
+	-DWITH_WEBKIT3=ON
 "
 
 src_install() {
