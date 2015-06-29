@@ -2,7 +2,7 @@ inherit perl python python3 cmake
 
 NAME="libproxy"
 VERSION=0.4.11
-RELEASE=4
+RELEASE=5
 CATEGORY="Net"
 SUMMARY="Proxy configuration management library"
 DESCRIPTION="libproxy exists to answer the question: Given a network resource,
